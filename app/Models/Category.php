@@ -13,9 +13,9 @@ class Category extends Model
         'description'
     ];
 
-    // public function product(){
+    public function product(){
 
-    //     return $this->hasOne(Product::class);
-    // }
+        return $this->hasOne(Product::class);
+    }
 
 }
