@@ -150,4 +150,16 @@ class ProductController extends Controller
           ]);
        }
    }
+
+   public function delete($id){
+
+      $product = Product::find($id);
+      
+      if($product){
+        unlink($product->image);
+      }
+      
+      $product->delete();
+     
+   }
 }
