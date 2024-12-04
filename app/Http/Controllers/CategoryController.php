@@ -50,4 +50,22 @@ class CategoryController extends Controller
             ],500);
         }
     }
+
+    public function edit($id){
+
+        $category =Category::find($id);
+
+        if(!$category){
+         
+            return response()->json([
+              'success'=> false,
+               'error'=> 'category not found'
+            ],404);
+        }
+
+        return response()->json([
+            'success'=> true,
+             'category'=> $category
+          ],200);
+    }
 }
