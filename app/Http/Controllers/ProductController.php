@@ -14,8 +14,19 @@ class ProductController extends Controller
         $products = Product::all();
 
         return response()->json([
-            'products' => $products,
-            'success' => true,
+            'data' => $products->items(),       // Current page data
+            'meta' => [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+            ],
+            'links' => [
+                'first' => $products->url(1),
+                'last' => $products->url($products->lastPage()),
+                'next' => $products->nextPageUrl(),
+                'prev' => $products->previousPageUrl(),
+            ],
         ]);
     }
 
@@ -155,11 +166,20 @@ class ProductController extends Controller
 
       $product = Product::find($id);
       
-      if($product){
-        unlink($product->image);
+      if(!$product){
+        
+        return response()->json([
+           'success'=>false,
+            'message' => 'product not found',
+        ],404);
       }
-      
+      unlink($product->image);
       $product->delete();
+
+      return response()->json([
+         'success' => true,
+          'message' => 'product deleted successfully',
+      ],203);
      
    }
 }

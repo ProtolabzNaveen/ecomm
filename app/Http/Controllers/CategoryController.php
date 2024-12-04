@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -12,8 +13,8 @@ class CategoryController extends Controller
         $categories = Category::paginate(10);
 
         return response()->json([
-            'success' => true,
-            'data' => $categories,
+            'data' => CategoryResource::collection($categories),
+            'pagination' => $categories->toArray()
         ]);
     }
 
@@ -86,4 +87,22 @@ class CategoryController extends Controller
             ]);
         }
     }
+
+    public function delete($id)
+    {
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Category not found',
+            ], 404); // Return 404 if category not found
+        }
+        $category->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Category deleted successfully',
+        ], 204); // Return 204 No Content for successful deletion
+    }
+
 }
