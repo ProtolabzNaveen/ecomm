@@ -8,9 +8,9 @@ class Product extends Model
 {
     protected $table = 'products';
 
-    public function Category(){
+    // public function Category(){
 
-        return $this->hasOne(Category::class);
-    }
+    //     return $this->hasOne(Category::class);
+    // }
 
 }

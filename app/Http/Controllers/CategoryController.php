@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -35,11 +35,14 @@ class CategoryController extends Controller
 
         try{
 
-            $Category = Category::create($request->al());
+            $category = Category::create([
+                'name'=> $request->name,
+                'description' => $request->description
+            ]);
             return response()->json([
                'success'=> true,
                 'message' => 'category  added successfully',
-                 'category' => $Category
+                 'category' => $category
             ],201);
         }
         catch(Exception $error){
@@ -67,5 +70,20 @@ class CategoryController extends Controller
             'success'=> true,
              'category'=> $category
           ],200);
+    }
+
+    public function update(Request $request){
+       
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string',
+            'description' => 'required|string'
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+               'success' => false,
+               'errors' => $validator->errors()
+            ]);
+        }
     }
 }

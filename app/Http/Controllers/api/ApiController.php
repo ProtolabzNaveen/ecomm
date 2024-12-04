@@ -47,12 +47,18 @@ class ApiController extends Controller
     // Login
     public function login(Request $request)
     {
+        // Validate the request
         $credentials = $request->only('email', 'password');
 
-        if (!$token = Auth::attempt($credentials)) {
+        // Check if authentication is successful
+        if (!Auth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+          $user = Auth::user();
+        // Generate JWT token for the authenticated user
+        $token = JWTAuth::fromUser($user);
 
+        // Return the token in the response
         return response()->json([
             'token' => $token,
         ]);
