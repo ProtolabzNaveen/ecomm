@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
@@ -19,6 +20,7 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
+       
         return [
             'name' => $this->faker->word,
             'description' => $this->faker->text,
@@ -27,10 +29,12 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 100),
             'category_id' => Category::factory(), // Assuming categories are pre-defined, else you can create categories here
             'sku' => $this->faker->unique()->word,
+            'image' => $this->faker->imageUrl(640, 480, 'products'),
             'status' => 'active',
             'is_featured' => $this->faker->boolean,
             'attributes' => json_encode(['color' => $this->faker->safeColorName, 'size' => $this->faker->word]),
             'rating' => $this->faker->randomFloat(2, 0, 5),
+
         ];
     }
 }

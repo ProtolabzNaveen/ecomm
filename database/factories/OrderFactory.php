@@ -16,6 +16,7 @@ class OrderFactory extends Factory
     {
          return [
             'user_id' => User::factory(),
+            'order_number'=> $this->faker->unique()->integer,
             'total_price' => $this->faker->randomFloat(2, 10, 500),
             'status' => 'pending', // Or other statuses you may have
         ];

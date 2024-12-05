@@ -18,17 +18,17 @@ class DatabaseSeeder extends Seeder
     {
        // Create 10 users
     //    $users = User::factory(10)->create();
-       $categories = Category::factory(10)->create();
+    //    $categories = Category::factory(10)->create();
        // Create 10 products
     //    $products = Product::factory(10)->create();
 
        // Create 5 orders and each with 3 order items
-    //    $orders = Order::factory(5)->create()->each(function ($order) use ($products) {
-    //        // Create 3 order items for each order
-    //        OrderItem::factory(3)->create([
-    //            'order_id' => $order->id,
-    //            'product_id' => $products->random()->id, // Random product from the list
-    //        ]);
-    //    });
+       $orders = Order::factory(5)->create()->each(function ($order) use ($products) {
+           // Create 3 order items for each order
+           OrderItem::factory(3)->create([
+               'order_id' => $order->id,
+               'product_id' => $products->random()->id, // Random product from the list
+           ]);
+       });
     }
 }
