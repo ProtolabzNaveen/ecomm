@@ -15,8 +15,8 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 10, 2); // Product price with two decimal places
             $table->decimal('sale_price', 10, 2)->nullable(); // Product sale price (nullable)
             $table->integer('stock')->default(0); // Stock quantity
-            $table->integer('category_id')->nullable(); // Category ID (nullable for unclassified products)
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null'); // Foreign key for category
+            $table->unsignedBigInteger('category_id')->nullable(); // Foreign key column
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->string('sku')->unique(); // Unique Stock Keeping Unit
             $table->string('image')->nullable(); // Image URL or file path (nullable)
             $table->enum('status', ['active', 'inactive'])->default('active'); // Product status
